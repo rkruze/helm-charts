@@ -1,0 +1,21 @@
+name: release
+on:
+  release:
+    types: [published]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get the version
+      id: get_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+    
+    - uses: actions/checkout@v2
+    - name: Publish Helm charts
+      uses: stefanprodan/helm-gh-pages@master
+      with:
+        charts_dir: redpanda
+        charts_url: https://charts.vectorized.io/
+        token: ${{ secrets.GITHUB_TOKEN }}
+        chart_version: ${{ steps.get_version.outputs.VERSION }}
