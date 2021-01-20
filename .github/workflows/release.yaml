@@ -15,7 +15,7 @@ jobs:
     - name: Publish Helm charts
       uses: stefanprodan/helm-gh-pages@master
       with:
-        charts_dir: redpanda
+        charts_dir: '.'
         charts_url: https://charts.vectorized.io/
         token: ${{ secrets.GITHUB_TOKEN }}
         chart_version: ${{ steps.get_version.outputs.VERSION }}
